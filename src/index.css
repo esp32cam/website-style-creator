@@ -10,13 +10,13 @@
 
 @layer base {
   :root {
-    /* Pure white background */
-    --background: 0 0% 98%;
-    --foreground: 0 0% 5%;
+    /* Off-white/light gray background like reference */
+    --background: 40 5% 94%;
+    --foreground: 0 0% 10%;
 
     /* Card surfaces - light gray for illustration area */
-    --card: 0 0% 94%;
-    --card-foreground: 0 0% 5%;
+    --card: 40 3% 90%;
+    --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 5%;
@@ -30,24 +30,24 @@
     --secondary-foreground: 0 0% 5%;
 
     /* Muted */
-    --muted: 0 0% 90%;
-    --muted-foreground: 0 0% 35%;
+    --muted: 0 0% 88%;
+    --muted-foreground: 0 0% 40%;
 
-    /* Accent - Coral Red */
-    --accent: 5 80% 55%;
+    /* Accent - Coral Red (more orange-red like reference) */
+    --accent: 12 70% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
     --ring: 220 100% 50%;
 
     --radius: 0.5rem;
 
-    /* Grid pattern color */
-    --grid-color: 0 0% 85%;
+    /* Grid pattern color - more visible */
+    --grid-color: 0 0% 80%;
 
     /* Glow effect for solution line */
     --glow-primary: 220 100% 60%;
