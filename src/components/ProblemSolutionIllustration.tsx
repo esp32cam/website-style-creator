@@ -93,24 +93,6 @@ const ProblemSolutionIllustration = () => {
             />
           ))}
 
-          <motion.circle
-            cx="235"
-            cy="75"
-            r="16"
-            fill="hsl(var(--accent))"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.0, type: "spring", stiffness: 200 }}
-          />
-          <motion.circle
-            cx="225"
-            cy="175"
-            r="16"
-            fill="hsl(var(--accent))"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.1, type: "spring", stiffness: 200 }}
-          />
         </motion.g>
 
         {/* Dashed curved connector - SMOOTH S-CURVE */}
@@ -143,6 +125,26 @@ const ProblemSolutionIllustration = () => {
             transition={{ duration: 1.5, delay: 1.6 }}
           />
         </motion.g>
+
+        {/* Orange Dots - Moved to end to overlay lines */}
+        <motion.circle
+          cx="235"
+          cy="75"
+          r="16"
+          fill="hsl(var(--accent))"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 1.0, type: "spring", stiffness: 200 }}
+        />
+        <motion.circle
+          cx="225"
+          cy="175"
+          r="16"
+          fill="hsl(var(--accent))"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 1.1, type: "spring", stiffness: 200 }}
+        />
       </svg>
     </div>
   );
