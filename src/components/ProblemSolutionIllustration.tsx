@@ -1,12 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
 
-// Problem points data
+// Problem points data - English only, no descriptions
 const problemPoints = [
-  { id: 1, x: 130, y: 100, label: "Bottleneck", description: "ข้อจำกัดในกระบวนการ" },
-  { id: 2, x: 180, y: 145, label: "Miscommunication", description: "สื่อสารผิดพลาด" },
-  { id: 3, x: 145, y: 175, label: "Delays", description: "ความล่าช้าสะสม" },
-  { id: 4, x: 165, y: 120, label: "Redundancy", description: "ขั้นตอนซ้ำซ้อน" },
+  { id: 1, x: 120, y: 95, label: "Bottleneck" },
+  { id: 2, x: 185, y: 115, label: "Redundancy" },
+  { id: 3, x: 195, y: 160, label: "Miscommunication" },
+  { id: 4, x: 130, y: 185, label: "Delays" },
 ];
 
 const ProblemSolutionIllustration = () => {
@@ -33,7 +33,7 @@ const ProblemSolutionIllustration = () => {
         } else {
           clearInterval(highlightInterval);
           
-          // Phase 3: Unravel animation (after all points highlighted)
+          // Phase 3: Unravel animation
           setTimeout(() => {
             setPhase("unravel");
             
@@ -47,10 +47,10 @@ const ProblemSolutionIllustration = () => {
                 setActivePoint(null);
                 setIsAnimating(false);
               }, 800);
-            }, 2000);
+            }, 2200);
           }, 500);
         }
-      }, 800);
+      }, 700);
     }, 800);
   }, [isAnimating]);
 
@@ -68,13 +68,13 @@ const ProblemSolutionIllustration = () => {
         }}
       />
 
-      {/* Main container with zoom animation */}
+      {/* Main container with zoom animation - zoom in much closer */}
       <motion.div
         className="relative w-full h-full"
         animate={{
-          scale: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? 2.2 : 1,
-          x: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? "25%" : 0,
-          y: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? "35%" : 0,
+          scale: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? 3.5 : 1,
+          x: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? "55%" : 0,
+          y: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? "60%" : 0,
         }}
         transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
       >
@@ -97,7 +97,7 @@ const ProblemSolutionIllustration = () => {
             
             {/* Highlight glow for problem points */}
             <filter id="orangeGlow" x="-200%" y="-200%" width="500%" height="500%">
-              <feGaussianBlur stdDeviation="8" result="blur" />
+              <feGaussianBlur stdDeviation="6" result="blur" />
               <feFlood floodColor="#FF4500" floodOpacity="0.8" result="color" />
               <feComposite in="color" in2="blur" operator="in" result="glow" />
               <feMerge>
@@ -144,7 +144,7 @@ const ProblemSolutionIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* Problem - Clickable scribble area */}
+          {/* Problem - Orbital loops style like reference */}
           <motion.g
             onClick={handleProblemClick}
             style={{ cursor: isAnimating ? "default" : "pointer" }}
@@ -153,17 +153,19 @@ const ProblemSolutionIllustration = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            {/* Scribble ellipses */}
+            {/* Orbital loops - more like atom/orbital style */}
             {[
-              { cx: 160, cy: 120, rx: 55, ry: 45, r: 0 },
-              { cx: 140, cy: 150, rx: 50, ry: 40, r: -20 },
-              { cx: 180, cy: 140, rx: 45, ry: 50, r: 30 },
-              { cx: 150, cy: 170, rx: 40, ry: 35, r: -40 },
-              { cx: 175, cy: 110, rx: 35, ry: 45, r: 50 },
-              { cx: 130, cy: 130, rx: 42, ry: 38, r: -60 },
-              { cx: 165, cy: 160, rx: 38, ry: 42, r: 70 },
-              { cx: 145, cy: 100, rx: 48, ry: 35, r: -30 },
-              { cx: 190, cy: 155, rx: 32, ry: 40, r: 45 },
+              // Horizontal ellipses
+              { cx: 155, cy: 140, rx: 70, ry: 30, r: 0 },
+              { cx: 155, cy: 140, rx: 65, ry: 28, r: 25 },
+              { cx: 155, cy: 140, rx: 60, ry: 32, r: 50 },
+              { cx: 155, cy: 140, rx: 68, ry: 26, r: 75 },
+              { cx: 155, cy: 140, rx: 55, ry: 35, r: 100 },
+              { cx: 155, cy: 140, rx: 62, ry: 30, r: 125 },
+              { cx: 155, cy: 140, rx: 58, ry: 34, r: 150 },
+              { cx: 155, cy: 140, rx: 66, ry: 28, r: -15 },
+              { cx: 155, cy: 140, rx: 52, ry: 38, r: -40 },
+              { cx: 155, cy: 140, rx: 60, ry: 32, r: -65 },
             ].map((item, i) => (
               <motion.ellipse
                 key={i}
@@ -172,7 +174,7 @@ const ProblemSolutionIllustration = () => {
                 rx={item.rx}
                 ry={item.ry}
                 stroke="hsl(var(--accent))"
-                strokeWidth="5"
+                strokeWidth="4"
                 fill="none"
                 transform={`rotate(${item.r}, ${item.cx}, ${item.cy})`}
                 animate={{
@@ -184,9 +186,9 @@ const ProblemSolutionIllustration = () => {
 
             {/* Invisible clickable area */}
             <circle
-              cx="160"
+              cx="155"
               cy="140"
-              r="80"
+              r="85"
               fill="transparent"
               style={{ cursor: isAnimating ? "default" : "pointer" }}
             />
@@ -194,7 +196,7 @@ const ProblemSolutionIllustration = () => {
 
           {/* Problem Points - show during highlight phase */}
           <AnimatePresence>
-            {(phase === "highlight" || phase === "unravel") && problemPoints.map((point, index) => (
+            {(phase === "highlight" || phase === "unravel") && problemPoints.map((point) => (
               <motion.g
                 key={point.id}
                 initial={{ opacity: 0, scale: 0 }}
@@ -209,67 +211,59 @@ const ProblemSolutionIllustration = () => {
                 <motion.circle
                   cx={point.x}
                   cy={point.y}
-                  r="12"
+                  r="10"
                   fill="hsl(var(--accent))"
                   filter={activePoint === point.id ? "url(#orangeGlow)" : "none"}
                   animate={{
-                    scale: activePoint === point.id ? [1, 1.2, 1] : 1,
+                    scale: activePoint === point.id ? [1, 1.15, 1] : 1,
                   }}
                   transition={{
                     scale: { duration: 0.5, repeat: activePoint === point.id ? Infinity : 0 },
                   }}
                 />
                 
-                {/* Label */}
+                {/* Large Label - English only */}
                 <motion.text
-                  x={point.x + 20}
-                  y={point.y - 5}
-                  className="text-[8px] font-bold fill-foreground"
+                  x={point.x + 18}
+                  y={point.y + 4}
+                  className="text-[14px] font-bold fill-foreground"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   {point.label}
-                </motion.text>
-                <motion.text
-                  x={point.x + 20}
-                  y={point.y + 6}
-                  className="text-[5px] fill-muted-foreground"
-                  style={{ fontFamily: "Inter, sans-serif" }}
-                >
-                  {point.description}
                 </motion.text>
               </motion.g>
             ))}
           </AnimatePresence>
 
-          {/* Unravel solution line - connecting through points */}
+          {/* Unravel solution line - same shape as original solution line */}
           <AnimatePresence>
             {phase === "unravel" && (
               <motion.g filter="url(#blueGlow)">
                 <motion.path
-                  d={`M ${problemPoints[0].x} ${problemPoints[0].y} 
-                      Q ${problemPoints[1].x - 20} ${problemPoints[1].y - 30} ${problemPoints[1].x} ${problemPoints[1].y}
-                      Q ${problemPoints[2].x + 30} ${problemPoints[2].y - 20} ${problemPoints[2].x} ${problemPoints[2].y}
-                      Q ${problemPoints[3].x - 10} ${problemPoints[3].y + 40} ${problemPoints[3].x} ${problemPoints[3].y}
-                      Q 220 200 280 250
-                      Q 350 300 400 280
-                      Q 450 260 460 240`}
+                  d="M 225 420 
+                     C 225 360, 240 330, 290 330 
+                     L 350 330 
+                     C 400 330, 410 290, 410 270 
+                     C 410 250, 430 240, 460 240"
                   stroke="#0055FF"
-                  strokeWidth="8"
+                  strokeWidth="14"
                   strokeLinecap="round"
                   fill="none"
                   initial={{ pathLength: 0, opacity: 0 }}
                   animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 1.8, ease: "easeInOut" }}
+                  transition={{ duration: 2, ease: "easeInOut" }}
                 />
               </motion.g>
             )}
           </AnimatePresence>
 
-          {/* Dashed curved connector - hide during animation */}
+          {/* Dashed curved connector - S-curve like reference */}
           <AnimatePresence>
             {phase === "idle" && (
               <motion.path
-                d="M 235 175 C 320 175, 280 325, 255 330"
+                d="M 220 175 
+                   C 260 180, 280 220, 270 260
+                   C 260 300, 240 320, 255 350"
                 stroke="hsl(var(--foreground))"
                 strokeWidth="3.5"
                 strokeDasharray="9 9"
@@ -283,7 +277,7 @@ const ProblemSolutionIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* Solution - Static blue line - hide during animation */}
+          {/* Solution - Static blue line */}
           <AnimatePresence>
             {phase === "idle" && (
               <motion.g filter="url(#blueGlow)">
@@ -306,14 +300,14 @@ const ProblemSolutionIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* Orange Dots - hide during animation */}
+          {/* Orange Dots on orbital */}
           <AnimatePresence>
             {phase === "idle" && (
               <>
                 <motion.circle
-                  cx="235"
-                  cy="75"
-                  r="16"
+                  cx="225"
+                  cy="140"
+                  r="14"
                   fill="hsl(var(--accent))"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -321,41 +315,30 @@ const ProblemSolutionIllustration = () => {
                   transition={{ delay: 1.0, type: "spring", stiffness: 200 }}
                 />
                 <motion.circle
-                  cx="225"
-                  cy="175"
-                  r="16"
+                  cx="155"
+                  cy="72"
+                  r="14"
                   fill="hsl(var(--accent))"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   exit={{ opacity: 0, scale: 0 }}
                   transition={{ delay: 1.1, type: "spring", stiffness: 200 }}
                 />
+                <motion.circle
+                  cx="90"
+                  cy="155"
+                  r="14"
+                  fill="hsl(var(--accent))"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ opacity: 0, scale: 0 }}
+                  transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
+                />
               </>
             )}
           </AnimatePresence>
         </svg>
       </motion.div>
-
-      {/* Click hint - show only in idle state */}
-      <AnimatePresence>
-        {phase === "idle" && !isAnimating && (
-          <motion.div
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-muted-foreground flex items-center gap-2"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            transition={{ delay: 2, duration: 0.5 }}
-          >
-            <motion.span
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              👆
-            </motion.span>
-            Click problem to explore
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
