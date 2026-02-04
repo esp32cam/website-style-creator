@@ -19,7 +19,7 @@ const Header = () => {
     <motion.header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 transition-all duration-300",
-        isScrolled ? "bg-background/80 backdrop-blur-md border-b border-border/50" : "bg-transparent"
+        isScrolled ? "bg-background/20 backdrop-blur-md border-b border-border/20" : "bg-transparent"
       )}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
