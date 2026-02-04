@@ -1,12 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
 
-// Problem points data - English only, no descriptions
+// Problem points data - positioned to be visible when zoomed
 const problemPoints = [
-  { id: 1, x: 120, y: 95, label: "Bottleneck" },
-  { id: 2, x: 185, y: 115, label: "Redundancy" },
-  { id: 3, x: 195, y: 160, label: "Miscommunication" },
-  { id: 4, x: 130, y: 185, label: "Delays" },
+  { id: 1, x: 130, y: 100, label: "Bottleneck" },
+  { id: 2, x: 185, y: 125, label: "Redundancy" },
+  { id: 3, x: 175, y: 170, label: "Miscommunication" },
+  { id: 4, x: 120, y: 155, label: "Delays" },
 ];
 
 const ProblemSolutionIllustration = () => {
@@ -68,13 +68,13 @@ const ProblemSolutionIllustration = () => {
         }}
       />
 
-      {/* Main container with zoom animation - zoom in much closer */}
+      {/* Main container with zoom animation - centered on problem area */}
       <motion.div
         className="relative w-full h-full"
         animate={{
-          scale: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? 3.5 : 1,
-          x: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? "55%" : 0,
-          y: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? "60%" : 0,
+          scale: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? 2.8 : 1,
+          x: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? "40%" : 0,
+          y: phase === "zoomIn" || phase === "highlight" || phase === "unravel" ? "45%" : 0,
         }}
         transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
       >
@@ -144,7 +144,7 @@ const ProblemSolutionIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* Problem - Orbital loops style like reference */}
+          {/* Problem - Original messy ellipses style */}
           <motion.g
             onClick={handleProblemClick}
             style={{ cursor: isAnimating ? "default" : "pointer" }}
@@ -153,19 +153,17 @@ const ProblemSolutionIllustration = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            {/* Orbital loops - more like atom/orbital style */}
+            {/* Original messy scribble ellipses */}
             {[
-              // Horizontal ellipses
-              { cx: 155, cy: 140, rx: 70, ry: 30, r: 0 },
-              { cx: 155, cy: 140, rx: 65, ry: 28, r: 25 },
-              { cx: 155, cy: 140, rx: 60, ry: 32, r: 50 },
-              { cx: 155, cy: 140, rx: 68, ry: 26, r: 75 },
-              { cx: 155, cy: 140, rx: 55, ry: 35, r: 100 },
-              { cx: 155, cy: 140, rx: 62, ry: 30, r: 125 },
-              { cx: 155, cy: 140, rx: 58, ry: 34, r: 150 },
-              { cx: 155, cy: 140, rx: 66, ry: 28, r: -15 },
-              { cx: 155, cy: 140, rx: 52, ry: 38, r: -40 },
-              { cx: 155, cy: 140, rx: 60, ry: 32, r: -65 },
+              { cx: 160, cy: 120, rx: 55, ry: 45, r: 0 },
+              { cx: 140, cy: 150, rx: 50, ry: 40, r: -20 },
+              { cx: 180, cy: 140, rx: 45, ry: 50, r: 30 },
+              { cx: 150, cy: 170, rx: 40, ry: 35, r: -40 },
+              { cx: 175, cy: 110, rx: 35, ry: 45, r: 50 },
+              { cx: 130, cy: 130, rx: 42, ry: 38, r: -60 },
+              { cx: 165, cy: 160, rx: 38, ry: 42, r: 70 },
+              { cx: 145, cy: 100, rx: 48, ry: 35, r: -30 },
+              { cx: 190, cy: 155, rx: 32, ry: 40, r: 45 },
             ].map((item, i) => (
               <motion.ellipse
                 key={i}
@@ -174,7 +172,7 @@ const ProblemSolutionIllustration = () => {
                 rx={item.rx}
                 ry={item.ry}
                 stroke="hsl(var(--accent))"
-                strokeWidth="4"
+                strokeWidth="5"
                 fill="none"
                 transform={`rotate(${item.r}, ${item.cx}, ${item.cy})`}
                 animate={{
@@ -186,47 +184,40 @@ const ProblemSolutionIllustration = () => {
 
             {/* Invisible clickable area */}
             <circle
-              cx="155"
+              cx="160"
               cy="140"
-              r="85"
+              r="80"
               fill="transparent"
               style={{ cursor: isAnimating ? "default" : "pointer" }}
             />
           </motion.g>
 
-          {/* Problem Points - show during highlight phase */}
+          {/* Problem Points - fade in smoothly, no bounce */}
           <AnimatePresence>
             {(phase === "highlight" || phase === "unravel") && problemPoints.map((point) => (
               <motion.g
                 key={point.id}
-                initial={{ opacity: 0, scale: 0 }}
+                initial={{ opacity: 0 }}
                 animate={{ 
                   opacity: activePoint !== null && activePoint >= point.id ? 1 : 0,
-                  scale: activePoint !== null && activePoint >= point.id ? 1 : 0,
                 }}
-                exit={{ opacity: 0, scale: 0 }}
-                transition={{ duration: 0.4, type: "spring", stiffness: 200 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
               >
-                {/* Highlight circle */}
+                {/* Highlight circle - fade in only */}
                 <motion.circle
                   cx={point.x}
                   cy={point.y}
                   r="10"
                   fill="hsl(var(--accent))"
                   filter={activePoint === point.id ? "url(#orangeGlow)" : "none"}
-                  animate={{
-                    scale: activePoint === point.id ? [1, 1.15, 1] : 1,
-                  }}
-                  transition={{
-                    scale: { duration: 0.5, repeat: activePoint === point.id ? Infinity : 0 },
-                  }}
                 />
                 
                 {/* Large Label - English only */}
                 <motion.text
-                  x={point.x + 18}
-                  y={point.y + 4}
-                  className="text-[14px] font-bold fill-foreground"
+                  x={point.x + 16}
+                  y={point.y + 5}
+                  className="text-[12px] font-bold fill-foreground"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   {point.label}
@@ -235,7 +226,7 @@ const ProblemSolutionIllustration = () => {
             ))}
           </AnimatePresence>
 
-          {/* Unravel solution line - same shape as original solution line */}
+          {/* Unravel solution line - same shape as original */}
           <AnimatePresence>
             {phase === "unravel" && (
               <motion.g filter="url(#blueGlow)">
@@ -257,13 +248,11 @@ const ProblemSolutionIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* Dashed curved connector - S-curve like reference */}
+          {/* Original dashed curved connector */}
           <AnimatePresence>
             {phase === "idle" && (
               <motion.path
-                d="M 220 175 
-                   C 260 180, 280 220, 270 260
-                   C 260 300, 240 320, 255 350"
+                d="M 235 175 C 320 175, 280 325, 255 330"
                 stroke="hsl(var(--foreground))"
                 strokeWidth="3.5"
                 strokeDasharray="9 9"
@@ -300,14 +289,14 @@ const ProblemSolutionIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* Orange Dots on orbital */}
+          {/* Orange Dots - original positions */}
           <AnimatePresence>
             {phase === "idle" && (
               <>
                 <motion.circle
-                  cx="225"
-                  cy="140"
-                  r="14"
+                  cx="235"
+                  cy="75"
+                  r="16"
                   fill="hsl(var(--accent))"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -315,24 +304,14 @@ const ProblemSolutionIllustration = () => {
                   transition={{ delay: 1.0, type: "spring", stiffness: 200 }}
                 />
                 <motion.circle
-                  cx="155"
-                  cy="72"
-                  r="14"
+                  cx="225"
+                  cy="175"
+                  r="16"
                   fill="hsl(var(--accent))"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   exit={{ opacity: 0, scale: 0 }}
                   transition={{ delay: 1.1, type: "spring", stiffness: 200 }}
-                />
-                <motion.circle
-                  cx="90"
-                  cy="155"
-                  r="14"
-                  fill="hsl(var(--accent))"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ opacity: 0, scale: 0 }}
-                  transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
                 />
               </>
             )}
