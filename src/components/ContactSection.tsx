@@ -3,10 +3,7 @@ import { motion } from "framer-motion";
 
 const ContactSection = () => {
     const handleContactClick = () => {
-        window.open(
-            "https://mail.google.com/mail/?view=cm&fs=1&to=pongsapakkhonghae@gmail.com",
-            "_blank"
-        );
+        window.location.href = "mailto:contactus@perpetualbeta.technology";
     };
 
     return (
